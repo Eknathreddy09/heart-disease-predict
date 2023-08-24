@@ -1,0 +1,23 @@
+apiVersion: carto.run/v1alpha1
+kind: Workload
+metadata:
+  name: heart-disease-predict
+  labels:
+    apps.tanzu.vmware.com/workload-type: web
+    apps.tanzu.vmware.com/has-tests: "true"
+    app.kubernetes.io/part-of: heart-disease-predict
+spec:
+  params:
+  - name: ports
+    value:
+    - port: 80
+      containerPort: 8080 # gunicorn default port
+      name: http
+  - name: annotations
+    value:
+      autoscaling.knative.dev/minScale: "1"
+  source:
+    git:
+      url: your-registry.io/project
+      ref:
+        branch: main
